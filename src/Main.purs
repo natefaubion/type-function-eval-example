@@ -40,6 +40,9 @@ main = do
     ("f" :\-> "g" :\-> TyVar "f" :$ TyVar "Int") :$ TyVar "Foo"
 
   print Strict do
+    ("f" :\-> "g" :\-> TyVar "f" :$ TyVar "Int") :$ TyVar "Foo"
+
+  print Strict do
     case_ (TyVar "Foo" :$ TyVar "Bar")
       [ Tuple (PatApp (PatCtr "Foo") (PatVar "b"))
           (TyVar "b")
