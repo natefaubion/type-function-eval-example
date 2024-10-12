@@ -6,7 +6,7 @@ import Data.List as List
 import Data.Tuple (Tuple(..))
 import Effect (Effect)
 import Effect.Console (log)
-import Types (Env(..), Mode(..), Pat(..), Ty(..), eval, printTy, quote)
+import Types (Constr(..), Env(..), Mode(..), Pat(..), Ty(..), eval, printTy, quote)
 
 infixl 2 TyApp as :$
 infixr 0 TyLam as :\->
@@ -44,10 +44,16 @@ main = do
       [ Tuple (PatApp (PatCtr "Foo") (PatVar "x")) (TyVar "x")
       ]
 
+
+  print Strict do
+    TyForall "f" Ty $ TyForall "r" Ty $ TyConstr
+      (ConstrEval (case_ (TyVar "f")
+        [ Tuple (PatCtr "Foo") (TyVar "Int")
+        ])
+        (TyVar "r"))
+      (TyVar "r")
+
   print Strict do
     TyForall "f" Ty $ case_ (TyVar "f")
       [ Tuple (PatCtr "Foo") (TyVar "Int")
       ]
-
-  -- print do
-  --   TyVar "Eval" :$

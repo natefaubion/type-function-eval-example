@@ -25,7 +25,7 @@ data Ty
 type Knd = Ty
 
 data Constr a =
-  ConstrEval a
+  ConstrEval a a
 
 data Pat
   = PatApp Pat Pat
@@ -94,7 +94,7 @@ evalApp env l r = case eval env l of
 
 evalConstr :: Env -> Constr Ty -> Constr SemTy
 evalConstr env = case _ of
-  ConstrEval ty -> ConstrEval (eval env ty)
+  ConstrEval a b -> ConstrEval (eval env a) (eval env b)
 
 evalCase :: Env -> Ty -> List (Tuple Pat Ty) -> SemTy
 evalCase env hd pats = go (eval env hd) pats
@@ -183,9 +183,9 @@ quote mode names = case _ of
         ty
 
 quoteConstr :: Mode -> List Name -> Constr SemTy -> Constr Ty
-quoteConstr _ names = case _ of
-  ConstrEval sem ->
-    ConstrEval (quote Lax names sem)
+quoteConstr mode names = case _ of
+  ConstrEval a b ->
+    ConstrEval (quote Lax names a) (quote mode names b)
 
 quoteLam :: List Name -> Name -> Closure -> Ty
 quoteLam names v (Closure env sem) = do
@@ -247,8 +247,8 @@ printTy1 = case _ of
 
 printConstr :: Constr Ty -> String
 printConstr = case _ of
-  ConstrEval ty ->
-    "Eval " <> printTy1 ty
+  ConstrEval a b ->
+    "Eval " <> printTy1 a <> " " <> printTy1 b
 
 printPat :: Pat -> String
 printPat = case _ of
