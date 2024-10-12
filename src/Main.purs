@@ -6,6 +6,7 @@ import Data.List as List
 import Data.Tuple (Tuple(..))
 import Effect (Effect)
 import Effect.Console (log)
+import Effect.Exception (catchException, message)
 import Types (Constr(..), Env(..), Mode(..), Pat(..), Ty(..), eval, printTy, quote)
 
 infixl 2 TyApp as :$
@@ -23,8 +24,16 @@ main :: Effect Unit
 main = do
   let
     print m t = do
-      log $ printTy t
-      log $ printTy $ expand m t
+      case m of
+        Strict -> log "(strict)"
+        Lax -> log "(lax)"
+      log $ "original:   " <> printTy t
+
+      catchException
+        (\err -> log $ "ERROR:      " <> message err)
+        do
+          pure unit
+          log $ "evaled:     " <> (printTy (expand m t))
       log ""
 
   print Lax do

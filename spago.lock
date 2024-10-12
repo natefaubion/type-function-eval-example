@@ -7,6 +7,7 @@
           "dependencies": [
             "console",
             "effect",
+            "exceptions",
             "lists",
             "maybe",
             "partial",
@@ -21,6 +22,7 @@
             "distributive",
             "effect",
             "either",
+            "exceptions",
             "exists",
             "foldable-traversable",
             "functors",
@@ -647,6 +649,17 @@
       "dependencies": [
         "control",
         "invariant",
+        "maybe",
+        "prelude"
+      ]
+    },
+    "exceptions": {
+      "type": "registry",
+      "version": "6.1.0",
+      "integrity": "sha256-K0T89IHtF3vBY7eSAO7eDOqSb2J9kZGAcDN5+IKsF8E=",
+      "dependencies": [
+        "effect",
+        "either",
         "maybe",
         "prelude"
       ]

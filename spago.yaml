@@ -3,6 +3,7 @@ package:
   dependencies:
     - console
     - effect
+    - exceptions
     - lists
     - maybe
     - partial
