@@ -1,0 +1,16 @@
+package:
+  name: type-functions
+  dependencies:
+    - console
+    - effect
+    - lists
+    - maybe
+    - partial
+    - prelude
+  test:
+    main: Test.Main
+    dependencies: []
+workspace:
+  packageSet:
+    registry: 60.5.1
+  extraPackages: {}
